@@ -17,6 +17,16 @@ The goal of this project is to deliver a high performance replacement to `ListVi
 
 Installing
 ---------------
+###Maven
+Add the following maven dependency exchanging `x.x.x` for the latest release.
+```XML
+<dependency>
+    <groupId>se.emilsjolander</groupId>
+    <artifactId>stickylistheaders</artifactId>
+    <version>x.x.x</version>
+</dependency>
+```
+
 ###Gradle
 Add the following gradle dependency exchanging `x.x.x` for the latest release.
 ```groovy
@@ -184,13 +194,22 @@ public interface OnStickyHeaderOffsetChangedListener {
 }
 ```
 
+A `OnStickyHeaderChangedListener` listens for changes to the header.  This enables UI elements elsewhere to react to the current header (e.g. if each header is a date, then the rest of the UI can update when you scroll to a new date).
+```java
+public void setOnStickyHeaderChangedListener(OnStickyHeaderChangedListener listener);
+
+public interface OnStickyHeaderChangedListener {
+    void onStickyHeaderChanged(StickyListHeadersListView l, View header, int itemPosition, long headerId);
+}
+```
+
 Here are two methods added to the API for inspecting the children of the underlying `ListView`. I could not override the normal `getChildAt()` and `getChildCount()` methods as that would mess up the underlying measurement system of the `FrameLayout` wrapping the `ListView`.
 ```java
 public View getListChildAt(int index);
 public int getListChildCount();
 ```
 
-This is a setter and getter for an internal attribute that controls if the list should be drawn under the stuck header. The default value is false. If you want to see the list scroll under your header(the header should have a semi-transparent background) you will want to set this attribute to `true`.
+This is a setter and getter for an internal attribute that controls if the list should be drawn under the stuck header. The default value is true. If you do not want to see the list scroll under your header you will want to set this attribute to `false`.
 ```java
 public void setDrawingListUnderStickyHeader(boolean drawingListUnderStickyHeader);
 public boolean isDrawingListUnderStickyHeader();

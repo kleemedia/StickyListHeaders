@@ -1,6 +1,4 @@
-package se.emilsjolander.stickylistheaders;
-
-import java.util.ArrayList;
+package se.emilsjolander.stickylistheaders.sample;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,9 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-/**
- * @author Emil Sjölander
- */
+import java.util.ArrayList;
+
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 public class TestBaseAdapter extends BaseAdapter implements
         StickyListHeadersAdapter, SectionIndexer {
 
@@ -102,14 +101,8 @@ public class TestBaseAdapter extends BaseAdapter implements
         }
 
         // set header text as first char in name
-        char headerChar = mCountries[position].subSequence(0, 1).charAt(0);
-        String headerText;
-        if (headerChar % 2 == 0) {
-            headerText = headerChar + "\n" + headerChar + "\n" + headerChar;
-        } else {
-            headerText = headerChar + "\n" + headerChar;
-        }
-        holder.text.setText(headerText);
+        CharSequence headerChar = mCountries[position].subSequence(0, 1);
+        holder.text.setText(headerChar);
 
         return convertView;
     }
